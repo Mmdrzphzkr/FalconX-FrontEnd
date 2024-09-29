@@ -1,7 +1,12 @@
 "use client";
 import Input from "../../components/input/input";
+import React, { useState } from "react";
 
 const LoginPage = () => {
+  const [state, setState] = useState({
+    email: "",
+  });
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="login-box__container p-[44px] w-[420px] h-[600px] bg-[#18191D] rounded-[24px] relative">
@@ -170,7 +175,15 @@ const LoginPage = () => {
             </div>
           </div>
           <div className="login-box__form">
-            <Input label="Email" type="email"/>
+            <Input
+              label="Email"
+              type="email"
+              value={state.email}
+              onChange={(e) => {
+                console.log("New email:", e.target.value);
+                setState({ ...state, email: e.target.value });
+              }}
+            />
           </div>
         </div>
       </div>
