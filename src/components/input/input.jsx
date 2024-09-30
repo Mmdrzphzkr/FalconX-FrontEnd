@@ -12,12 +12,20 @@ const DynamicInput = ({
   multiline = false,
   rows = 1,
   classNames = "",
-  icon = null, // New prop to accept custom SVG icons
+  icon = null,
 }) => {
   const [isFocused, setIsFocused] = React.useState(false);
+  const [hasValue, setHasValue] = React.useState(false);
 
   const handleFocus = () => setIsFocused(true);
-  const handleBlur = () => setIsFocused(value.length > 0);
+  const handleBlur = () => {
+    setIsFocused(false);
+    setHasValue(value.length > 0);
+  };
+
+  React.useEffect(() => {
+    setHasValue(value.length > 0);
+  }, [value]);
 
   return (
     <TextField
@@ -33,19 +41,12 @@ const DynamicInput = ({
       className={classNames}
       placeholder={placeholder}
       InputLabelProps={{
-        shrink: isFocused || value.length > 0,
+        shrink: isFocused || hasValue,
       }}
       InputProps={{
         startAdornment: icon && (
-          <InputAdornment position="start" className="absolute left-[5px]">
-            <span
-              style={{
-                paddingRight: isFocused ? "1px" : "0",
-                borderRight: isFocused ? "2px solid #777E90" : "none",
-              }}
-            >
-              {icon} {/* Render the passed SVG icon here */}
-            </span>
+          <InputAdornment position="start" className="absolute left-[16px]">
+            {icon}
           </InputAdornment>
         ),
       }}
@@ -53,26 +54,37 @@ const DynamicInput = ({
       onBlur={handleBlur}
       sx={{
         "& .MuiInputBase-root.MuiOutlinedInput-root": {
-          paddingLeft: icon ? "0px" : "16px", // Adjust padding based on the presence of the icon
+          paddingLeft: icon ? "0px" : "16px",
         },
         input: {
-          color: "white",
+          color: "#fff",
           backgroundColor: "#23262F",
           borderRadius: "10px",
-          paddingLeft: icon ? "35px" : "16px",
+          paddingLeft: icon ? "55px" : "16px",
         },
-        label: { color: "#777E90", left: "20px", top: "2px" },
+        label: {
+          color: hasValue && !isFocused ? "#fff" : "#777E90",
+          left: hasValue && !isFocused ? "0" : "42px",
+          top: "2px",
+        },
         "& label.Mui-focused": {
-          color: "white",
+          color: "#fff",
           left: "0",
           top: "0",
         },
         "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: hasValue && !isFocused ? "#353945" : "none",
+            borderWidth: hasValue && !isFocused ? "3px" : "0",
+            borderRadius: "10px",
+          },
           "&:hover fieldset": {
             borderColor: "#1A80E6",
+            borderRadius: "10px",
           },
           "&.Mui-focused fieldset": {
             borderColor: "#1A80E6",
+            borderRadius: "10px",
           },
         },
       }}

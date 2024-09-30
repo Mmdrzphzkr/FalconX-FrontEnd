@@ -6,6 +6,21 @@ const LoginPage = () => {
   const [state, setState] = useState({
     email: "",
   });
+  const emailIcon = (
+    <svg
+      width="35"
+      height="25"
+      viewBox="0 0 35 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M18 5.5H6C4 5.5 3 6.5 3 8.5V17.5C3 19.5 4 20.5 6 20.5H18C20 20.5 21 19.5 21 17.5V8.5C21 6.5 20 5.5 18 5.5ZM17.9409 10.106L13.0291 13.678C12.7211 13.902 12.36 14.014 12 14.014C11.64 14.014 11.2779 13.902 10.9709 13.679L6.05908 10.106C5.72408 9.863 5.65004 9.393 5.89404 9.058C6.13704 8.724 6.60389 8.64801 6.94189 8.89301L11.854 12.465C11.942 12.528 12.059 12.529 12.147 12.465L17.0591 8.89301C17.3961 8.64801 17.8639 8.724 18.1069 9.058C18.3509 9.394 18.2759 9.863 17.9409 10.106Z"
+        fill="#777E90"
+      />
+      <path d="M31.214 21.984V5.82H32.438V21.984H31.214Z" fill="#777E90" />
+    </svg>
+  );
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -179,6 +194,7 @@ const LoginPage = () => {
               label="Email"
               type="email"
               value={state.email}
+              icon={emailIcon}
               onChange={(e) => {
                 console.log("New email:", e.target.value);
                 setState({ ...state, email: e.target.value });
