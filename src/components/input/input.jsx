@@ -23,9 +23,9 @@ const DynamicInput = ({
     setHasValue(value.length > 0);
   };
 
-  React.useEffect(() => {
-    setHasValue(value.length > 0);
-  }, [value]);
+  // React.useEffect(() => {
+  //   setHasValue(value.length > 0);
+  // }, [value]);
 
   return (
     <TextField
@@ -54,17 +54,17 @@ const DynamicInput = ({
       onBlur={handleBlur}
       sx={{
         "& .MuiInputBase-root.MuiOutlinedInput-root": {
-          paddingLeft: icon ? "0px" : "16px",
+          paddingLeft: icon ? "0px" : "10px",
         },
         input: {
           color: "#fff",
           backgroundColor: "#23262F",
           borderRadius: "10px",
-          paddingLeft: icon ? "55px" : "16px",
+          paddingLeft: icon ? "45px" : "16px",
         },
         label: {
           color: hasValue && !isFocused ? "#fff" : "#777E90",
-          left: hasValue && !isFocused ? "0" : "42px",
+          left: hasValue && !isFocused ? "0" : "35px",
           top: "2px",
         },
         "& label.Mui-focused": {
