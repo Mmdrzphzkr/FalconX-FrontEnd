@@ -4,7 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 const DynamicInput = ({
   label,
-  type = "text",
+  type = "",
   placeholder = "",
   onChange = () => {},
   value = "",
@@ -23,9 +23,7 @@ const DynamicInput = ({
     setHasValue(value.length > 0);
   };
 
-  // React.useEffect(() => {
-  //   setHasValue(value.length > 0);
-  // }, [value]);
+  console.log(type)
 
   return (
     <TextField
@@ -54,7 +52,7 @@ const DynamicInput = ({
       onBlur={handleBlur}
       sx={{
         "& .MuiInputBase-root.MuiOutlinedInput-root": {
-          paddingLeft: icon ? "0px" : "10px",
+          paddingLeft: "0",
         },
         input: {
           color: "#fff",

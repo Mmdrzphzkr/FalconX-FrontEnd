@@ -20,9 +20,7 @@ const oidcConfig = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className="antialiased"
-      >
+      <body className="antialiased min-h-screen flex justify-center items-center flex-col">
         {/* OIDC Provider for Authentication */}
         <AuthProvider {...oidcConfig}>
           {/* Apollo Provider for GraphQL */}

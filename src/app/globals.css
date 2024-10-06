@@ -60,6 +60,8 @@ body {
   color: var(--foreground);
   background: url(../images/register/register-background.png);
   font-family: "IBM";
+  background-position: top;
+  background-size: cover;
 }
 
 @layer utilities {

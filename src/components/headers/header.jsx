@@ -19,8 +19,8 @@ const Header = () => {
 
   const { items } = useSelector((state) => state.header);
   return (
-    <header>
-      <nav className="bg-[#18191D] w-100 min-h-fit flex justify-start items-center w-full px-[16px] py-[8px]">
+    <header className="w-full">
+      <nav className="bg-[#18191D] min-h-fit flex justify-start items-center w-full px-[16px] py-[8px]">
         <div className="logo__container">
           <Link href="/">
             <svg

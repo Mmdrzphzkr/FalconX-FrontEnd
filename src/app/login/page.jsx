@@ -1,10 +1,12 @@
 "use client";
 import Input from "../../components/input/input";
 import React, { useState } from "react";
-
+import { Button } from "@mui/material";
 const LoginPage = () => {
   const [state, setState] = useState({
     email: "",
+    phone: "",
+    loginMethod: "email",
   });
   const emailIcon = (
     <svg
@@ -22,8 +24,8 @@ const LoginPage = () => {
   );
 
   return (
-    <div className="flex justify-center items-center flex-col min-h-screen">
-      <div className="login-box__container p-[44px] w-[420px] h-[600px] bg-[#18191D] rounded-[24px] relative">
+    <div className="flex justify-start items-center lg:items-center flex-col container m-auto py-10">
+      <div className="login-box__container p-[15px] md:p-[25px] lg:p-[44px] w-[90%] max-w-[420px] h-[80vh] bg-[#18191D] rounded-[24px] relative">
         <div className="login-box__layer absolute top-0 left-0">
           <svg
             className="w-full  rounded-[24px]"
@@ -56,7 +58,7 @@ const LoginPage = () => {
           </svg>
         </div>
         <div className="login-box__content grid grid-rows-3 h-full">
-          <div className="login-box__content-first-section flex flex-col justify-center items-center">
+          <div className="login-box__header flex flex-col justify-center items-center">
             <div className="email-logo__container">
               <svg
                 width="73"
@@ -188,22 +190,65 @@ const LoginPage = () => {
               </h1>
             </div>
           </div>
+          <div className="login-box__switch">
+            {/* Background that slides based on the selected button */}
+
+            <div className="login-box__switch-background bg-[#23262F] rounded-[8px] w-full flex justify-center relative z-10">
+              <div
+                className={`absolute top-0 left-0 h-full w-[50%] bg-[#353945] rounded-[8px] transition-all duration-300 ease-in-out ${
+                  state.loginMethod === "phone" ? "translate-x-[100%]" : ""
+                }`}
+              ></div>
+              <Button
+                className={`${
+                  state.loginMethod === "email"
+                    ? "text-[#FCFCFD]"
+                    : "text-[#B1B5C3] hover:text-[#FCFCFD]"
+                } w-[50%] border-0`}
+                onClick={() => setState({ ...state, loginMethod: "email" })}
+              >
+                Email
+              </Button>
+              <Button
+                className={`${
+                  state.loginMethod === "phone"
+                    ? "text-[#FCFCFD]"
+                    : "text-[#B1B5C3] hover:text-[#FCFCFD]"
+                } w-[50%] border-0`}
+                onClick={() => setState({ ...state, loginMethod: "phone" })}
+              >
+                Phone Number
+              </Button>
+            </div>
+          </div>
           <div className="login-box__form">
-            <Input
-              label="Email"
-              type="email"
-              value={state.email}
-              icon={emailIcon}
-              onChange={(e) => {
-                console.log("New email:", e.target.value);
-                setState({ ...state, email: e.target.value });
-              }}
-            />
+            {state.loginMethod == "email" ? (
+              <Input
+                label="Email"
+                type="email"
+                value={state.email}
+                icon={emailIcon}
+                onChange={(e) => {
+                  setState({ ...state, email: e.target.value });
+                }}
+              />
+            ) : (
+              <Input
+                type="tel"
+                value={state.phone}
+                onChange={(e) => {
+                  console.log("New phone:", e.target.value);
+                  setState({ ...state, phone: e.target.value });
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
-      <div className="other-signups relative w-[420px]">
-        <p className="flex justify-center items-center before:w-full before:h-[1px] before:bg-white after:w-full after:h-[1px] after:bg-white">or sign up with</p>
+      <div className="other-signups relative w-[60%] max-w-[330px] py-[23px]">
+        <p className="text-[12px] text-[#B1B5C3] font-normal flex justify-between items-center before:basis-[27%] before:lg:basis-[35%] before:h-[0.5px] before:bg-[#777E90] after:basis-[27%] after:lg:basis-[35%] after:h-[0.5px] after:bg-[#777E90]">
+          or sign up with
+        </p>
       </div>
     </div>
   );
