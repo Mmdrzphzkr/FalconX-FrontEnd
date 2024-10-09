@@ -1,32 +1,35 @@
-// actions/types.js
-import queries from "../queries/queries";
-import client from "../../lib/apollo-client";
+import axios from "axios";
 
-// Action Types
-export const FETCH_HEADER_ITEMS_REQUEST = "FETCH_HEADER_ITEMS_REQUEST";
-export const FETCH_HEADER_ITEMS_SUCCESS = "FETCH_HEADER_ITEMS_SUCCESS";
-export const FETCH_HEADER_ITEMS_FAILURE = "FETCH_HEADER_ITEMS_FAILURE";
+export const FETCH_HEADER_REQUEST = "FETCH_HEADER_REQUEST";
+export const FETCH_HEADER_SUCCESS = "FETCH_HEADER_SUCCESS";
+export const FETCH_HEADER_FAILURE = "FETCH_HEADER_FAILURE";
 
-const fetchHeaderItems = () => async (dispatch) => {
-  // Dispatching request action
-  dispatch({ type: FETCH_HEADER_ITEMS_REQUEST });
+// Action creators
+export const fetchHeaderRequest = () => ({
+  type: FETCH_HEADER_REQUEST,
+});
 
+export const fetchHeaderSuccess = (items) => ({
+  type: FETCH_HEADER_SUCCESS,
+  payload: items,
+});
+
+export const fetchHeaderFailure = (error) => ({
+  type: FETCH_HEADER_FAILURE,
+  payload: error,
+});
+
+// Async action to fetch header content
+const fetchHeaderContent = () => async (dispatch) => {
+  dispatch(fetchHeaderRequest());
   try {
-    // Use Apollo Client directly in action
-    const { data } = await client.query({
-      query: queries.GET_HEADER_ITEMS,
-    });
-
-    // Dispatch success action with the fetched data
-    dispatch({
-      type: FETCH_HEADER_ITEMS_SUCCESS,
-      payload: data.menu[0].menuItemsList.menuItems,
-    });
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/headers`
+    );
+    dispatch(fetchHeaderSuccess(response.data));
   } catch (error) {
-    // Dispatch failure action with error
-    console.error("Error fetching header items:", error);
-    dispatch({ type: FETCH_HEADER_ITEMS_FAILURE, error });
+    dispatch(fetchHeaderFailure(error.message));
   }
 };
 
-export default fetchHeaderItems;
+export default fetchHeaderContent;

@@ -2,12 +2,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import FetchHeaderItems from "../../redux/actions/a.header";
-import { useAuth } from "react-oidc-context";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 const Header = () => {
-  const auth = useAuth();
   const dispatch = useDispatch();
   const pathname = usePathname();
 
@@ -59,11 +57,11 @@ const Header = () => {
         </div>
         {!isLoginPage ? (
           <div className="menu-items__container flex justify-start w-full">
-            {items.map((item) => (
-              <div key={item.contentItemId} className="mx-2 p-2">
-                <Link href={`/${item.displayText}`}>{item.displayText}</Link>
+            {items?.data?.map((item) => (
+              <div key={item.id} className="mx-2 p-2">
+                <Link href={item.Menu.Url}>{item.Menu.Name}</Link>
               </div>
-            ))}
+            )) || <div>No menu items available</div>}
           </div>
         ) : null}
         {!isLoginPage ? (
