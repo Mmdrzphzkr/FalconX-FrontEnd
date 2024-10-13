@@ -204,6 +204,8 @@ const Login = () => {
                     : "text-[#B1B5C3] hover:text-[#FCFCFD]"
                 } w-[50%] border-0`}
                 onClick={() => setState({ ...state, loginMethod: "email" })}
+                variant="outlined"
+                sx={{ textTransform: 'none' }}
               >
                 Email
               </Button>
@@ -214,6 +216,8 @@ const Login = () => {
                     : "text-[#B1B5C3] hover:text-[#FCFCFD]"
                 } w-[50%] border-0`}
                 onClick={() => setState({ ...state, loginMethod: "phone" })}
+                variant="outlined"
+                sx={{ textTransform: 'none' }}
               >
                 Phone Number
               </Button>
