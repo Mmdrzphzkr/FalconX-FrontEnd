@@ -23,8 +23,6 @@ const DynamicInput = ({
     setHasValue(value.length > 0);
   };
 
-  console.log(type)
-
   return (
     <TextField
       label={label}

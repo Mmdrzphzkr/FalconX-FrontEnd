@@ -1,12 +1,48 @@
 import Input from "../input/input";
 import { Button } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, registerUser } from "../../redux/actions/a.auth";
+import fetchUserContent from "../../redux/actions/a.user";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     email: "",
     phone: "",
+    loginMethod: "email",
+    password: "",
+    userExisted: false,
   });
+  const userItems = useSelector((state) => state.userItems);
+
+  const handleSubmit = async () => {
+    if (state.loginMethod === "email") {
+      try {
+        const res = await dispatch(
+          fetchUserContent(state.email).then((res) => {
+            return res;
+          })
+        ); // Await the dispatch
+        console.log(res);
+        if (res.status === 200) {
+          setState({ ...state, userExisted: true });
+          // dispatch(loginUser(state.email, state.password));
+          console.log("user founded", state.email);
+        } else {
+          setState({ ...state, userExisted: false });
+          // dispatch(registerUser(state.email, state.password));
+          console.log("user not founded");
+        }
+      } catch (error) {
+        console.error("Error fetching user content:", error);
+        setState({ ...state, userExisted: false });
+      }
+    } else {
+      // Handle phone number login
+    }
+  };
+
   const emailIcon = (
     <svg
       width="24"
@@ -21,6 +57,7 @@ const Login = () => {
       />
     </svg>
   );
+
   return (
     <>
       <div className="login-box__container p-[15px] md:p-[25px] lg:p-[44px] w-[90%] max-w-[420px] h-[80vh] bg-[#18191D] rounded-[24px] relative">
@@ -205,7 +242,7 @@ const Login = () => {
                 } w-[50%] border-0`}
                 onClick={() => setState({ ...state, loginMethod: "email" })}
                 variant="outlined"
-                sx={{ textTransform: 'none' }}
+                sx={{ textTransform: "none" }}
               >
                 Email
               </Button>
@@ -217,7 +254,7 @@ const Login = () => {
                 } w-[50%] border-0`}
                 onClick={() => setState({ ...state, loginMethod: "phone" })}
                 variant="outlined"
-                sx={{ textTransform: 'none' }}
+                sx={{ textTransform: "none" }}
               >
                 Phone Number
               </Button>
@@ -239,11 +276,24 @@ const Login = () => {
                 type="tel"
                 value={state.phone}
                 onChange={(e) => {
-                  console.log("New phone:", e.target.value);
                   setState({ ...state, phone: e.target.value });
                 }}
               />
             )}
+          </div>
+          <div className="login-box__button m-auto w-full">
+            <Button
+              className={`${
+                state.loginMethod === "email"
+                  ? "text-[#FCFCFD]"
+                  : "text-[#B1B5C3] hover:text-[#FCFCFD]"
+              } lg:w-full md:h-[56px] bg-[#1A80E6] text-[18px] font-medium border-0 h-[48px] w-[80%] m-auto`}
+              onClick={handleSubmit}
+              variant="outlined"
+              sx={{ textTransform: "none" }}
+            >
+              Next
+            </Button>
           </div>
         </div>
       </div>
